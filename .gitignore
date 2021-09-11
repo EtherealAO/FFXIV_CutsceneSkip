@@ -33,6 +33,7 @@
 
 .vs/
 .idb
+.log
 .tlog
 .pdb
 .recipe
