@@ -1,0 +1,31 @@
+#pragma once
+#include <Windows.h>
+#include <algorithm>
+#include <cstdint>
+#include <cctype>
+#include <functional>
+#include <thread>
+#include <vector>
+#include <array>
+#include <map>
+#include <deque>
+#include <fstream>
+#include <Psapi.h>
+#include <sstream>
+#include <libloaderapi.h>
+#include <cmath>
+#include <memory>
+#include <stack>
+#include <iostream>
+#include <TlHelp32.h>
+#include <any>
+#include <array>
+#include <filesystem>
+#include <winternl.h>
+#include <cstdint>
+
+
+#include "utils/xorstr.h"
+#include "utils/lazy_importer.h"
+#include "utils/address.h"
+#include "utils/memory.h"
