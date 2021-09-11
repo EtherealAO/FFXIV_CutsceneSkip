@@ -33,4 +33,8 @@
 
 .vs/
 .idb
-.log
+.tlog
+.pdb
+.recipe
+.exp
+.lastbuildstate
