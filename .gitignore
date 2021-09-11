@@ -32,12 +32,7 @@
 *.app
 
 .vs/
-*.idb
-*.log
-*.tlog
-*.pdb
-*.recipe
-*.exp
-*.lastbuildstate
-*.ipdb
-*.iobj
+Debug/
+Release/
+obj/
+bin/
