@@ -15,7 +15,7 @@ using Microsoft.Win32;
 [assembly: AssemblyTitle("CutsceneSkip")]
 [assembly: AssemblyDescription("Skip Cutscenes in MSQ Roulette")]
 [assembly: AssemblyCompany("Bluefissure, modified by winter")]
-[assembly: AssemblyVersion("1.0.2.3")]
+[assembly: AssemblyVersion("1.0.2.4")]
 [assembly: AssemblyCopyright("Copyright © Bluefissure 2021")]
 
 namespace CutsceneSkip
@@ -46,6 +46,9 @@ namespace CutsceneSkip
             int result = on_read_log(args.originalLogLine, args.detectedZone);
             switch (result)
             {
+                case -1:
+                    m_lbPluginInfo.Text = "Not initialized" + m_lbStupidGameProcessInfo;
+                    break;
                 case 0:
                     m_lbPluginInfo.Text = "Disabled" + m_lbStupidGameProcessInfo;
                     break;
@@ -54,7 +57,6 @@ namespace CutsceneSkip
                     break;
                 case 2:
                     m_lbPluginInfo.Text = "Disabled ( 初见 )" + m_lbStupidGameProcessInfo;
-                    MessageBox.Show("队伍里有初见，插件已关闭。如果是自己人重开插件即可正常使用", "CutsceneSkip");
                     break;
             } 
         }
@@ -88,7 +90,8 @@ namespace CutsceneSkip
                         if (result != 1)
                         {
                             m_lbPluginStats.Text = "Failed --> " + GetErrorMessage(result);
-                            throw new Exception(GetErrorMessage(result));
+                            args.Cancel = true;
+                            throw new Exception("出现错误,到插件列表里查看原因(应该有)");
                         }
                         m_lbStupidGameProcessInfo = "\nProcess ID: " + m_GameProcess.Id + " ( 如果不跳动画请检查Process ID是否与解析插件里的一致 )\n";
                         m_lbPluginInfo.Text = "Initialized" + m_lbStupidGameProcessInfo;
@@ -106,7 +109,7 @@ namespace CutsceneSkip
                     return "无效handle.";
 
                 case -1:
-                    return "重要的东西被摸你傻偷走了.";
+                    return "找不到地址.";
 
                 case -2:
                     return "权限不够.";
@@ -191,6 +194,16 @@ namespace CutsceneSkip
             m_lbPluginStats.Text = "Loaded";
 
             MessageBox.Show("仅在队伍中没有初见时才会工作。\n免费插件请勿倒卖。\n如果有初见且是自己人时重开插件就能正常使用", "CutsceneSkip");
+
+            m_GameProcess = GetGameProcess() ?? Process.GetProcessesByName("ffxiv_dx11")[0];
+            int result = initialize(m_GameProcess.Id);
+            if (result != 1)
+            {
+                m_lbPluginStats.Text = "Failed --> " + GetErrorMessage(result);
+                throw new Exception(GetErrorMessage(result));
+            }
+            m_lbStupidGameProcessInfo = "\nProcess ID: " + m_GameProcess.Id + " ( 如果不跳动画请检查Process ID是否与解析插件里的一致 )\n";
+            m_lbPluginInfo.Text = "Initialized" + m_lbStupidGameProcessInfo;
         }
 
         public void DeInitPlugin()
