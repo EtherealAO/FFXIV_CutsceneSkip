@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows.Forms;
 using Advanced_Combat_Tracker;
 using System.ComponentModel;
@@ -12,11 +9,13 @@ using FFXIV_ACT_Plugin;
 using FFXIV_ACT_Plugin.Common;
 using FFXIV_ACT_Plugin.Common.Models;
 using System.Reflection;
+using System.Text.RegularExpressions;
+using Microsoft.Win32;
 
 [assembly: AssemblyTitle("CutsceneSkip")]
 [assembly: AssemblyDescription("Skip Cutscenes in MSQ Roulette")]
 [assembly: AssemblyCompany("Bluefissure, modified by winter")]
-[assembly: AssemblyVersion("1.0.2.2")]
+[assembly: AssemblyVersion("1.0.2.3")]
 [assembly: AssemblyCopyright("Copyright © Bluefissure 2021")]
 
 namespace CutsceneSkip
@@ -93,6 +92,7 @@ namespace CutsceneSkip
                         }
                         m_lbStupidGameProcessInfo = "\nProcess ID: " + m_GameProcess.Id + " ( 如果不跳动画请检查Process ID是否与解析插件里的一致 )\n";
                         m_lbPluginInfo.Text = "Initialized" + m_lbStupidGameProcessInfo;
+                        m_lbPluginStats.Text = "Working";
                     }
                 }
             }
@@ -128,6 +128,32 @@ namespace CutsceneSkip
             return entry ?? throw new Exception("找不到解析插件FFXIV_ACT_Plugin，请确保插件有安装并启动");
         }
 
+        private bool CheckTheFuckingRedistributableIHatePeopleThatDoesntInstaillItAndITookThisCodeFromStackOverflow()
+        {
+            string dependenciesPath = @"SOFTWARE\Classes\Installer\Dependencies";
+
+            using (RegistryKey dependencies = Registry.LocalMachine.OpenSubKey(dependenciesPath))
+            {
+                if (dependencies == null) return false;
+
+                foreach (string subKeyName in dependencies.GetSubKeyNames().Where(n => n.Contains("VC_RuntimeAdditionalVSU_amd64")))
+                {
+                    using (RegistryKey subDir = Registry.LocalMachine.OpenSubKey(dependenciesPath + "\\" + subKeyName))
+                    {
+                        var value = subDir.GetValue("DisplayName")?.ToString() ?? null;
+                        if (string.IsNullOrEmpty(value)) continue;
+
+                        if (value.Contains("C++ 2019 X64"))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
         public void InitPlugin(TabPage PluginTab, Label StatusText)
         {
             m_lbPluginStats = StatusText;   // Hand the status label's reference to our local var
@@ -141,6 +167,11 @@ namespace CutsceneSkip
             m_bgProcessMoniotr = new BackgroundWorker { WorkerSupportsCancellation = true };
             m_bgProcessMoniotr.DoWork += ProcessMonitor;
             m_bgProcessMoniotr.RunWorkerAsync();
+
+            if (!CheckTheFuckingRedistributableIHatePeopleThatDoesntInstaillItAndITookThisCodeFromStackOverflow())
+            {
+                throw new Exception("缺少msvc142.dll,需要安装 VC++2019运行库 才能使用插件");
+            }
 
             if (Process.GetProcessesByName("ffxiv_dx11").Length == 0)
             {
@@ -157,7 +188,7 @@ namespace CutsceneSkip
             PluginTab.Text = "CutsceneSkip";
             PluginTab.Controls.Add(m_lbPluginInfo);
 
-            m_lbPluginStats.Text = "Working";
+            m_lbPluginStats.Text = "Loaded";
 
             MessageBox.Show("仅在队伍中没有初见时才会工作。\n免费插件请勿倒卖。\n如果有初见且是自己人时重开插件就能正常使用", "CutsceneSkip");
         }
