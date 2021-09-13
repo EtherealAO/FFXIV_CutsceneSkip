@@ -90,7 +90,7 @@ extern "C" __declspec(dllexport) int on_read_log( const char* msg, const char* z
         }*/
 
         // 00:0839:队伍
-        if ( ( _msg.find( xorstr_( "00:0839:\xE9\x98\x9F\xE4\xBC\x8D" ) ) != std::string_view::npos || _msg.find( xorstr_( "00:0839:\u961F\u4F0D" ) ) != std::string_view::npos ) && g_enabled )
+        if ( g_enabled && ( _msg.find( xorstr_( "00:0839:\xE9\x98\x9F\xE4\xBC\x8D" ) ) != std::string_view::npos || _msg.find( xorstr_( "00:0839:\u961F\u4F0D" ) ) != std::string_view::npos ) )
         {
             g_enabled = false;
             // on_read_log can't be called without the plugin being fully initialized
