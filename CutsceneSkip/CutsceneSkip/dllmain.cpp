@@ -61,8 +61,10 @@ extern "C" __declspec(dllexport) int on_read_log( const char* msg, const char* z
     // Every 3 bytes is a chinese character
     std::string_view _zone( zone );
     std::string_view _msg( msg );
-    // 帝国南方堡                                                                                                                天幕魔导城
-    if ( _zone.find( xorstr_( "\xE5\xB8\x9D\xE5\x9B\xBD\xE5\x8D\x97\xE6\x96\xB9\xE5\xA0\xA1" ) ) != std::string_view::npos || _zone.find( xorstr_( "\xE5\xA4\xA9\xE5\xB9\x95\xE9\xAD\x94\xE5\xAF\xBC\xE5\x9F\x8E" ) ) != std::string_view::npos || _zone.find( xorstr_( "\u5E1D\u56FD\u5357\u65B9\u5821" ) ) != std::string_view::npos || _zone.find( xorstr_( "\u5929\u5E55\u9B54\u5BFC\u57CE" ) ) != std::string_view::npos )
+    if ( _zone.find( xorstr_( "\xE5\xB8\x9D\xE5\x9B\xBD\xE5\x8D\x97\xE6\x96\xB9\xE5\xA0\xA1" ) ) != std::string_view::npos || // 帝国南方堡 
+        _zone.find( xorstr_( "\xE5\xA4\xA9\xE5\xB9\x95\xE9\xAD\x94\xE5\xAF\xBC\xE5\x9F\x8E" ) ) != std::string_view::npos || //天幕魔导城
+        _zone.find( xorstr_( "\u5E1D\u56FD\u5357\u65B9\u5821" ) ) != std::string_view::npos || // 帝国南方堡 
+        _zone.find( xorstr_( "\u5929\u5E55\u9B54\u5BFC\u57CE" ) ) != std::string_view::npos ) //天幕魔导城
     {
         // 00:0039:离开了休
         if ( !g_enabled && ( _msg.find( xorstr_( "00:0039:\xE7\xA6\xBB\xE5\xBC\x80\xE4\xBA\x86\xE4\xBC\x91" ) ) != std::string_view::npos || _msg.find( xorstr_( "00:0039:\u79BB\u5F00\u4E86\u4F11" ) ) != std::string_view::npos ) )
