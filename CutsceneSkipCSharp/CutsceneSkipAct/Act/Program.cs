@@ -15,7 +15,7 @@ using Microsoft.Win32;
 [assembly: AssemblyTitle("CutsceneSkip")]
 [assembly: AssemblyDescription("Skip Cutscenes in MSQ Roulette")]
 [assembly: AssemblyCompany("Bluefissure, modified by winter")]
-[assembly: AssemblyVersion("1.0.2.4")]
+[assembly: AssemblyVersion("1.0.2.42")]
 [assembly: AssemblyCopyright("Copyright © Bluefissure 2021")]
 
 namespace CutsceneSkip
@@ -199,9 +199,9 @@ namespace CutsceneSkip
             int result = initialize(m_GameProcess.Id);
             if (result != 1)
             {
-                m_lbPluginStats.Text = "Failed --> " + GetErrorMessage(result);
                 throw new Exception(GetErrorMessage(result));
             }
+
             m_lbStupidGameProcessInfo = "\nProcess ID: " + m_GameProcess.Id + " ( 如果不跳动画请检查Process ID是否与解析插件里的一致 )\n";
             m_lbPluginInfo.Text = "Initialized" + m_lbStupidGameProcessInfo;
         }

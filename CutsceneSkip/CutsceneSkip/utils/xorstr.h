@@ -45,6 +45,8 @@
 #define JM_XORSTR_LOAD_FROM_REG
 #endif
 
+#define JM_XORSTR_DISABLE_AVX_INTRINSICS
+
 namespace jm {
 
     namespace detail {
