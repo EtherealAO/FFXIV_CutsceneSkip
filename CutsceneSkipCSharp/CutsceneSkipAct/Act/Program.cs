@@ -1,21 +1,17 @@
-﻿using System;
+﻿using Advanced_Combat_Tracker;
+using Microsoft.Win32;
+using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using Advanced_Combat_Tracker;
-using System.ComponentModel;
-using FFXIV_ACT_Plugin;
-using FFXIV_ACT_Plugin.Common;
-using FFXIV_ACT_Plugin.Common.Models;
-using System.Reflection;
-using System.Text.RegularExpressions;
-using Microsoft.Win32;
 
 [assembly: AssemblyTitle("CutsceneSkip")]
 [assembly: AssemblyDescription("Skip Cutscenes in MSQ Roulette")]
 [assembly: AssemblyCompany("Bluefissure, modified by winter")]
-[assembly: AssemblyVersion("1.0.2.42")]
+[assembly: AssemblyVersion("1.0.2.5")]
 [assembly: AssemblyCopyright("Copyright © Bluefissure 2021")]
 
 namespace CutsceneSkip
@@ -58,7 +54,7 @@ namespace CutsceneSkip
                 case 2:
                     m_lbPluginInfo.Text = "Disabled ( 初见 )" + m_lbStupidGameProcessInfo;
                     break;
-            } 
+            }
         }
 
         private Process GetGameProcess()
@@ -68,7 +64,7 @@ namespace CutsceneSkip
 
         // 从鲶鱼精邮差那儿拿的
         private void ProcessMonitor(object sender, DoWorkEventArgs args)
-        { 
+        {
             while (true)
             {
                 if (m_bgProcessMoniotr.CancellationPending)

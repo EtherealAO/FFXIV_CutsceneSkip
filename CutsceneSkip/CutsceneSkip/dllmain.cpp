@@ -61,13 +61,20 @@ extern "C" __declspec(dllexport) int on_read_log( const char* msg, const char* z
     // Every 3 bytes is a chinese character
     std::string_view _zone( zone );
     std::string_view _msg( msg );
-    if ( _zone.find( xorstr_( "\xE5\xB8\x9D\xE5\x9B\xBD\xE5\x8D\x97\xE6\x96\xB9\xE5\xA0\xA1" ) ) != std::string_view::npos || // 帝国南方堡 
-        _zone.find( xorstr_( "\xE5\xA4\xA9\xE5\xB9\x95\xE9\xAD\x94\xE5\xAF\xBC\xE5\x9F\x8E" ) ) != std::string_view::npos || //天幕魔导城
-        _zone.find( xorstr_( "\u5E1D\u56FD\u5357\u65B9\u5821" ) ) != std::string_view::npos || // 帝国南方堡 
-        _zone.find( xorstr_( "\u5929\u5E55\u9B54\u5BFC\u57CE" ) ) != std::string_view::npos ) //天幕魔导城
+    if ( _zone.find( xorstr_( "\xE5\xB8\x9D\xE5\x9B\xBD\xE5\x8D\x97\xE6\x96\xB9\xE5\xA0\xA1" ) ) != std::string_view::npos || // 帝国南方堡 Utf8 
+        _zone.find( xorstr_( "\xE5\xA4\xA9\xE5\xB9\x95\xE9\xAD\x94\xE5\xAF\xBC\xE5\x9F\x8E" ) ) != std::string_view::npos || // 天幕魔导城 Utf8
+        _zone.find( xorstr_( "\u5E1D\u56FD\u5357\u65B9\u5821" ) ) != std::string_view::npos || // 帝国南方堡 Unicode
+        _zone.find( xorstr_( "\u5929\u5E55\u9B54\u5BFC\u57CE" ) ) != std::string_view::npos || // 天幕魔导城 Unicode
+        _zone.find( xorstr_( "Castrum Meridianum" ) ) != std::string_view::npos || // 帝国南方堡 
+        _zone.find( xorstr_( "The Praetorium" ) ) != std::string_view::npos ) // 天幕魔导城
     {
         // 00:0039:离开了休
-        if ( !g_enabled && ( _msg.find( xorstr_( "00:0039:\xE7\xA6\xBB\xE5\xBC\x80\xE4\xBA\x86\xE4\xBC\x91" ) ) != std::string_view::npos || _msg.find( xorstr_( "00:0039:\u79BB\u5F00\u4E86\u4F11" ) ) != std::string_view::npos ) )
+        if ( !g_enabled && ( _msg.find( xorstr_( "00:0039:\xE7\xA6\xBB\xE5\xBC\x80\xE4\xBA\x86\xE4\xBC\x91" ) ) != std::string_view::npos || // Utf8
+            _msg.find( xorstr_( "00:0039:\u79BB\u5F00\u4E86\u4F11" ) ) != std::string_view::npos || // Unicode 
+            _msg.find( xorstr_( "00:0039:You have left the sanctuary" ) ) != std::string_view::npos || // UK
+            _msg.find( xorstr_( "00:0039:\u30ec\u30b9\u30c8\u30a8\u30ea\u30a2\u304b\u3089\u96e2\u308c\u305f" ) ) != std::string_view::npos || // レストエリアから離れた Unicode
+            _msg.find( xorstr_( "00:0039:\xe3\x83\xac\xe3\x82\xb9\xe3\x83\x88\xe3\x82\xa8\xe3\x83\xaa\xe3\x82\xa2\xe3\x81\x8b\xe3\x82\x89\xe9\x9b\xa2\xe3\x82\x8c\xe3\x81\x9f" ) ) != std::string_view::npos // レストエリアから離れた utf8
+        ) )
         {
             g_enabled = true;
 
@@ -92,7 +99,13 @@ extern "C" __declspec(dllexport) int on_read_log( const char* msg, const char* z
         }*/
 
         // 00:0839:队伍
-        if ( g_enabled && ( _msg.find( xorstr_( "00:0839:\xE9\x98\x9F\xE4\xBC\x8D" ) ) != std::string_view::npos || _msg.find( xorstr_( "00:0839:\u961F\u4F0D" ) ) != std::string_view::npos ) )
+        if ( g_enabled && ( _msg.find( xorstr_( "00:0839:\xE9\x98\x9F\xE4\xBC\x8D" ) ) != std::string_view::npos || // Utf8
+            _msg.find( xorstr_( "00:0839:\u961F\u4F0D" ) ) != std::string_view::npos || // Unicode
+            _msg.find( xorstr_( "00:0839:One or more party members are new to this duty" ) ) != std::string_view::npos || // NA
+            _msg.find( xorstr_( "00:0839:One or more party members have yet to complete this duty" ) ) != std::string_view::npos || // Britsh
+            _msg.find( xorstr_( "00:0839:\u672A\u5236\u8987\u306e\u53c2\u52a0\u30e1\u30f3" ) ) != std::string_view::npos || // 未制覇の参加メン Unicode
+            _msg.find( xorstr_( "00:0839:\xE6\x9C\xAA\xE5\x88\xB6\xE8\xA6\x87\xE3\x81\xAE\xE5\x8F\x82\xE5\x8A\xA0\xE3\x83\xA1\xE3\x83\xB3" ) ) != std::string_view::npos // 未制覇の参加メン Utf8
+        ) )
         {
             g_enabled = false;
             // on_read_log can't be called without the plugin being fully initialized
