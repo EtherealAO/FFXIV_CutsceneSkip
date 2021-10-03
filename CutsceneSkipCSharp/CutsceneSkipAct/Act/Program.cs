@@ -11,7 +11,7 @@ using System.Windows.Forms;
 [assembly: AssemblyTitle("CutsceneSkip")]
 [assembly: AssemblyDescription("Skip Cutscenes in MSQ Roulette")]
 [assembly: AssemblyCompany("Bluefissure, modified by winter")]
-[assembly: AssemblyVersion("1.0.2.5")]
+[assembly: AssemblyVersion("1.0.2.43")]
 [assembly: AssemblyCopyright("Copyright © Bluefissure 2021")]
 
 namespace CutsceneSkip
@@ -21,12 +21,12 @@ namespace CutsceneSkip
         public PluginEntry()
         { }
 
-        private Label m_lbPluginStats;
-        private Label m_lbPluginInfo;
-        private string m_lbStupidGameProcessInfo;
-        private BackgroundWorker m_bgProcessMoniotr;
-        private Process m_GameProcess;
-        private FFXIV_ACT_Plugin.FFXIV_ACT_Plugin m_ParsingPlugin;
+        private Label m_lbPluginStats = null;
+        private Label m_lbPluginInfo = null;
+        private string m_lbStupidGameProcessInfo = null;
+        private BackgroundWorker m_bgProcessMoniotr = null;
+        private Process m_GameProcess = null;
+        private FFXIV_ACT_Plugin.FFXIV_ACT_Plugin m_ParsingPlugin = null;
 
         [DllImport("CutsceneSkipCore.dll")]
         private static extern int initialize(int pid);
