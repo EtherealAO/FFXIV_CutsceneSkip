@@ -11,7 +11,7 @@ using System.Windows.Forms;
 [assembly: AssemblyTitle("CutsceneSkip")]
 [assembly: AssemblyDescription("Skip Cutscenes in MSQ Roulette")]
 [assembly: AssemblyCompany("Bluefissure, modified by winter")]
-[assembly: AssemblyVersion("1.0.2.43")]
+[assembly: AssemblyVersion("1.0.2.44")]
 [assembly: AssemblyCopyright("Copyright © Bluefissure 2021")]
 
 namespace CutsceneSkip
@@ -89,7 +89,7 @@ namespace CutsceneSkip
                             args.Cancel = true;
                             throw new Exception("出现错误,到插件列表里查看原因(应该有)");
                         }
-                        m_lbStupidGameProcessInfo = "\nProcess ID: " + m_GameProcess.Id + " ( 如果不跳动画请检查Process ID是否与解析插件里的一致 )\n";
+                        m_lbStupidGameProcessInfo = "\nProcess ID: " + m_GameProcess?.Id.ToString() + " ( 如果不跳动画请检查Process ID是否与解析插件里的一致 )\n";
                         m_lbPluginInfo.Text = "Initialized" + m_lbStupidGameProcessInfo;
                         m_lbPluginStats.Text = "Working";
                     }
@@ -127,7 +127,7 @@ namespace CutsceneSkip
             return entry ?? throw new Exception("找不到解析插件FFXIV_ACT_Plugin，请确保插件有安装并启动");
         }
 
-        private bool CheckTheFuckingRedistributableIHatePeopleThatDoesntInstaillItAndITookThisCodeFromStackOverflow()
+        private bool ImagineNotInstalling2019RedistributableIn2021AndITakeTheCodeFromStackOverflowBTW()
         {
             string dependenciesPath = @"SOFTWARE\Classes\Installer\Dependencies";
 
@@ -167,12 +167,14 @@ namespace CutsceneSkip
             m_bgProcessMoniotr.DoWork += ProcessMonitor;
             m_bgProcessMoniotr.RunWorkerAsync();
 
-            if (!CheckTheFuckingRedistributableIHatePeopleThatDoesntInstaillItAndITookThisCodeFromStackOverflow())
+            if (!ImagineNotInstalling2019RedistributableIn2021AndITakeTheCodeFromStackOverflowBTW())
             {
                 throw new Exception("缺少msvc142.dll,需要安装 VC++2019运行库 才能使用插件");
             }
 
-            if (Process.GetProcessesByName("ffxiv_dx11").Length == 0)
+            var p = Process.GetProcessesByName("ffxiv_dx11");
+
+            if (p.Length == 0)
             {
                 throw new Exception("你要先开游戏再加载插件");
             }
@@ -191,14 +193,15 @@ namespace CutsceneSkip
 
             MessageBox.Show("仅在队伍中没有初见时才会工作。\n免费插件请勿倒卖。\n如果有初见且是自己人时重开插件就能正常使用", "CutsceneSkip");
 
-            m_GameProcess = GetGameProcess() ?? Process.GetProcessesByName("ffxiv_dx11")[0];
-            int result = initialize(m_GameProcess.Id);
+            m_GameProcess = GetGameProcess() ?? p[0];
+
+            var result = initialize(m_GameProcess.Id);
             if (result != 1)
             {
                 throw new Exception(GetErrorMessage(result));
             }
 
-            m_lbStupidGameProcessInfo = "\nProcess ID: " + m_GameProcess.Id + " ( 如果不跳动画请检查Process ID是否与解析插件里的一致 )\n";
+            m_lbStupidGameProcessInfo = "\nProcess ID: " + m_GameProcess?.Id.ToString() + " ( 如果不跳动画请检查Process ID是否与解析插件里的一致 )\n";
             m_lbPluginInfo.Text = "Initialized" + m_lbStupidGameProcessInfo;
         }
 
