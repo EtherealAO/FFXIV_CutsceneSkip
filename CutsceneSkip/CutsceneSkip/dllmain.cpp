@@ -68,12 +68,12 @@ extern "C" __declspec(dllexport) int on_read_log( const char* msg, const char* z
         _zone.find( xorstr_( "Castrum Meridianum" ) ) != std::string_view::npos || // 帝国南方堡 
         _zone.find( xorstr_( "The Praetorium" ) ) != std::string_view::npos ) // 天幕魔导城
     {
-        // 00:0039:离开了休
-        if ( !g_enabled && ( _msg.find( xorstr_( "00:0039:\xE7\xA6\xBB\xE5\xBC\x80\xE4\xBA\x86\xE4\xBC\x91" ) ) != std::string_view::npos || // Utf8
-            _msg.find( xorstr_( "00:0039:\u79BB\u5F00\u4E86\u4F11" ) ) != std::string_view::npos || // Unicode 
-            _msg.find( xorstr_( "00:0039:You have left the sanctuary" ) ) != std::string_view::npos || // UK
-            _msg.find( xorstr_( "00:0039:\u30ec\u30b9\u30c8\u30a8\u30ea\u30a2\u304b\u3089\u96e2\u308c\u305f" ) ) != std::string_view::npos || // レストエリアから離れた Unicode
-            _msg.find( xorstr_( "00:0039:\xe3\x83\xac\xe3\x82\xb9\xe3\x83\x88\xe3\x82\xa8\xe3\x83\xaa\xe3\x82\xa2\xe3\x81\x8b\xe3\x82\x89\xe9\x9b\xa2\xe3\x82\x8c\xe3\x81\x9f" ) ) != std::string_view::npos // レストエリアから離れた utf8
+        // 离开了休
+        if ( !g_enabled && ( _msg.find( xorstr_( "\xE7\xA6\xBB\xE5\xBC\x80\xE4\xBA\x86\xE4\xBC\x91" ) ) != std::string_view::npos || // Utf8
+            _msg.find( xorstr_( "\u79BB\u5F00\u4E86\u4F11" ) ) != std::string_view::npos || // Unicode 
+            _msg.find( xorstr_( "You have left the sanctuary" ) ) != std::string_view::npos || // UK
+            _msg.find( xorstr_( "\u30ec\u30b9\u30c8\u30a8\u30ea\u30a2\u304b\u3089\u96e2\u308c\u305f" ) ) != std::string_view::npos || // レストエリアから離れた Unicode
+            _msg.find( xorstr_( "\xe3\x83\xac\xe3\x82\xb9\xe3\x83\x88\xe3\x82\xa8\xe3\x83\xaa\xe3\x82\xa2\xe3\x81\x8b\xe3\x82\x89\xe9\x9b\xa2\xe3\x82\x8c\xe3\x81\x9f" ) ) != std::string_view::npos // レストエリアから離れた utf8
         ) )
         {
             g_enabled = true;
@@ -99,6 +99,7 @@ extern "C" __declspec(dllexport) int on_read_log( const char* msg, const char* z
         }*/
 
         // 00:0839:队伍
+        /*
         if ( g_enabled && ( _msg.find( xorstr_( "00:0839:\xE9\x98\x9F\xE4\xBC\x8D" ) ) != std::string_view::npos || // Utf8
             _msg.find( xorstr_( "00:0839:\u961F\u4F0D" ) ) != std::string_view::npos || // Unicode
             _msg.find( xorstr_( "00:0839:One or more party members are new to this duty" ) ) != std::string_view::npos || // NA
@@ -112,8 +113,8 @@ extern "C" __declspec(dllexport) int on_read_log( const char* msg, const char* z
             // so this is safe to call without a if-statement
             LI_FN( WriteProcessMemory )( g_handle, reinterpret_cast<LPVOID>( g_address + 13 ), original_bytes[ 0 ], sizeof( original_bytes[ 0 ] ), nullptr );
             LI_FN( WriteProcessMemory )( g_handle, reinterpret_cast<LPVOID>( g_address + 13 + 27 ), original_bytes[ 1 ], sizeof( original_bytes[ 1 ] ), nullptr );
-            return 2;
-        }
+            return 3;
+        }*/
 
         return 1;
     }

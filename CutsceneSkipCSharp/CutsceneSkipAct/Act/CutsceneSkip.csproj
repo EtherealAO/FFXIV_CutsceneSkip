@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>CutsceneSkip</RootNamespace>
     <AssemblyName>CutsceneSkip</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -40,21 +40,19 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>ACT.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Advanced Combat Tracker, Version=3.5.0.273, Culture=neutral, PublicKeyToken=a946b61e93d97868, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>H:\ffcafe\Advanced Combat Tracker.dll</HintPath>
+      <HintPath>F:\ACT.呆萌整合\DLibs\Advanced Combat Tracker.dll</HintPath>
     </Reference>
-    <Reference Include="FFXIV_ACT_Plugin, Version=2.2.1.3, Culture=neutral, PublicKeyToken=9f740ac505d6bc50, processorArchitecture=MSIL">
+    <Reference Include="FFXIV_ACT_Plugin, Version=2.6.4.4, Culture=neutral, PublicKeyToken=9f740ac505d6bc50, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>H:\ffcafe\Plugins\FFXIV_ACT_Plugin\FFXIV_ACT_Plugin.dll</HintPath>
+      <HintPath>F:\ACT.呆萌整合\Plugins\FFXIV_ACT_Plugin.dll</HintPath>
     </Reference>
-    <Reference Include="FFXIV_ACT_Plugin.Common, Version=2.2.0.5, Culture=neutral, PublicKeyToken=9f740ac505d6bc50, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>H:\ffcafe\Plugins\FFXIV_ACT_Plugin\SDK\FFXIV_ACT_Plugin.Common.dll</HintPath>
+    <Reference Include="FFXIV_ACT_Plugin.Common">
+      <HintPath>F:\ACT.呆萌整合\SDK\FFXIV_ACT_Plugin.Common.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -71,6 +69,7 @@
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ACT.snk" />
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>

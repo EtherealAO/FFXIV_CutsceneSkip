@@ -52,7 +52,10 @@ namespace CutsceneSkip
                     m_lbPluginInfo.Text = "Enabled" + m_lbStupidGameProcessInfo;
                     break;
                 case 2:
-                    m_lbPluginInfo.Text = "Disabled ( 初见 )" + m_lbStupidGameProcessInfo;
+                    m_lbPluginInfo.Text = "Disabled ( 未找到“离开休息区” )" + m_lbStupidGameProcessInfo;
+                    break;
+                case 3:
+                    m_lbPluginInfo.Text = "Disabled ( 队内有初见 )" + m_lbStupidGameProcessInfo;
                     break;
             }
         }
@@ -91,7 +94,7 @@ namespace CutsceneSkip
                         }
                         m_lbStupidGameProcessInfo = "\nProcess ID: " + m_GameProcess?.Id.ToString() + " ( 如果不跳动画请检查Process ID是否与解析插件里的一致 )\n";
                         m_lbPluginInfo.Text = "Initialized" + m_lbStupidGameProcessInfo;
-                        m_lbPluginStats.Text = "Working";
+                        m_lbPluginStats.Text = "工作中……免费插件请勿倒卖\n仅在队伍中没有初见时才会工作，如果有初见且是自己人时重开插件就能正常使用";
                     }
                 }
             }
@@ -119,7 +122,7 @@ namespace CutsceneSkip
             FFXIV_ACT_Plugin.FFXIV_ACT_Plugin entry = null;
             foreach (var actPluginData in ActGlobals.oFormActMain.ActPlugins)
             {
-                if (actPluginData.pluginFile.Name.ToUpper().Contains("FFXIV_ACT_Plugin".ToUpper()) && actPluginData.lblPluginStatus.Text.ToUpper().Contains("FFXIV Plugin Started.".ToUpper()))
+                if (actPluginData.pluginFile.Name.ToUpper().Contains("FFXIV_ACT_Plugin".ToUpper()) && actPluginData.lblPluginStatus.Text.ToUpper().Contains("FFXIV_ACT_Plugin Started.".ToUpper()))
                 {
                     entry = (FFXIV_ACT_Plugin.FFXIV_ACT_Plugin)actPluginData.pluginObj;
                 }
@@ -129,6 +132,7 @@ namespace CutsceneSkip
 
         private bool ImagineNotInstalling2019RedistributableIn2021AndITakeTheCodeFromStackOverflowBTW()
         {
+            return true;
             string dependenciesPath = @"SOFTWARE\Classes\Installer\Dependencies";
 
             using (RegistryKey dependencies = Registry.LocalMachine.OpenSubKey(dependenciesPath))
@@ -190,8 +194,6 @@ namespace CutsceneSkip
             PluginTab.Controls.Add(m_lbPluginInfo);
 
             m_lbPluginStats.Text = "Loaded";
-
-            MessageBox.Show("仅在队伍中没有初见时才会工作。\n免费插件请勿倒卖。\n如果有初见且是自己人时重开插件就能正常使用", "CutsceneSkip");
 
             m_GameProcess = GetGameProcess() ?? p[0];
 
