@@ -17,7 +17,7 @@ extern "C" __declspec(dllexport) int initialize( int pid )
     if ( g_handle == INVALID_HANDLE_VALUE )
         return 0;
 
-    g_address = shared::memory.find_pattern( g_handle, xorstr_( "ffxiv_dx11.exe" ), xorstr_( "48 8B 01 8B D7 FF 90 ? ? ? ? 84 C0 ? ? 48 8B 0D ? ? ? ? BA ? ? ? ? 48 83 C1 10 E8 ? ? ? ? 83 78 20 00 ? ?" ) );
+    g_address = shared::memory.find_pattern( g_handle, xorstr_( "ffxiv_dx11.exe" ), xorstr_( "48 8B 01 8B D7 FF 90 ? ? ? ? 84 C0 75 33" ) );
     if ( !g_address )
         return -1;
 
