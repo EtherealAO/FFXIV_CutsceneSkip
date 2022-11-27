@@ -63,8 +63,10 @@ extern "C" __declspec(dllexport) int on_read_log( const char* msg, const char* z
     std::string_view _msg( msg );
     if ( _zone.find( xorstr_( "\xE5\xB8\x9D\xE5\x9B\xBD\xE5\x8D\x97\xE6\x96\xB9\xE5\xA0\xA1" ) ) != std::string_view::npos || // 帝国南方堡 Utf8 
         _zone.find( xorstr_( "\xE5\xA4\xA9\xE5\xB9\x95\xE9\xAD\x94\xE5\xAF\xBC\xE5\x9F\x8E" ) ) != std::string_view::npos || // 天幕魔导城 Utf8
+        _zone.find(xorstr_("\xE7\xA9\xB6\xE6\x9E\x81\xE7\xA5\x9E\xE5\x85\xB5\xE7\xA0\xB4\xE5\x9D\x8F\xE4\xBD\x9C\xE6\x88\x98")) != std::string_view::npos || // 究极神兵破坏作战 Utf8
         _zone.find( xorstr_( "\u5E1D\u56FD\u5357\u65B9\u5821" ) ) != std::string_view::npos || // 帝国南方堡 Unicode
         _zone.find( xorstr_( "\u5929\u5E55\u9B54\u5BFC\u57CE" ) ) != std::string_view::npos || // 天幕魔导城 Unicode
+        _zone.find(xorstr_("\u7A76\u6781\u795E\u5175\u7834\u574F\u4F5C\u6218")) != std::string_view::npos || // 究极神兵破坏作战 Utf8
         _zone.find( xorstr_( "Castrum Meridianum" ) ) != std::string_view::npos || // 帝国南方堡 
         _zone.find( xorstr_( "The Praetorium" ) ) != std::string_view::npos ) // 天幕魔导城
     {
